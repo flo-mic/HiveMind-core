@@ -88,6 +88,7 @@ class HiveMindProtocol(WebSocketServerProtocol):
         headers = {"server": self.platform}
         return (None, headers)
 
+
     def onOpen(self):
         """
        Connection from client is opened. Fires after opening
@@ -159,7 +160,6 @@ class HiveMindProtocol(WebSocketServerProtocol):
         if isinstance(payload, dict):
             payload = json.dumps(payload)
         # TODO encryption for binary payloads
-        # TODO check config for mandatory crypto / handshake
         if self.crypto_key and not isBinary:
             payload = encrypt_as_json(self.crypto_key, payload)
         if isinstance(payload, str):
@@ -352,6 +352,8 @@ class HiveMind(WebSocketServerFactory):
                 payload["shake"] = client.handshake.communicate_key(pub)
                 msg = {"msg_type": "hello", "payload": payload}
                 self.interface.send(msg, client)
+                # start using new key
+                client.crypto_key = client.handshake.aes_key
             elif msg_type == "bus":
                 self.handle_bus_message(payload, client)
             elif msg_type == "propagate":
