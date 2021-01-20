@@ -15,7 +15,7 @@ setup(
                       "service_identity",
                       "autobahn",
                       "twisted",
-                      "ovos_utils>=0.0.1",
+                      "ovos_utils>=0.0.6",
                       "json_database>=0.2.6",
                       "pycryptodomex",
                       "zeroconf>=0.1.6",
