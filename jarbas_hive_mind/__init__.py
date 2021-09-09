@@ -164,10 +164,10 @@ class HiveMindListener:
         self._use_ssl = ssl_config.get("use_ssl", True)
 
         # generate self signed keys
-        if not exists(self.ssl_key) and gen_keys and \
-                self.is_secure:
+        if not exists(self.ssl_key) and gen_keys and self.is_secure:
             LOG.warning("ssl keys dont exist")
-            self.generate_keys(self.certificate_path)
+            self._cert_file, self._key_file = self.generate_keys(
+                self.certificate_path)
 
     @property
     def is_secure(self):
@@ -188,11 +188,10 @@ class HiveMindListener:
                       key_name="HiveMind"):
         LOG.info("creating self signed SSL keys")
         name = key_name.split("/")[-1].replace(".key", "")
-        create_self_signed_cert(path, name)
-        cert = path + "/" + name + ".crt"
-        key = path + "/" + name + ".key"
+        cert, key = create_self_signed_cert(path, name)
         LOG.info("key created at: " + key)
         LOG.info("crt created at: " + cert)
+        return cert, key
 
     def secure_listen(self, key=None, cert=None, factory=None, protocol=None):
         self._use_ssl = True
