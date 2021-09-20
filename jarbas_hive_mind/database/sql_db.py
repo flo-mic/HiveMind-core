@@ -104,6 +104,12 @@ class SQLClientDatabase:
             return None
         return user.crypto_key
 
+    def get_clients(self):
+        clients = []
+        for user in self.session.query(Client).all():
+            clients.append(user.name)
+        return clients
+
     def add_client(self, name=None, key="", admin=False,
                    blacklist="{}", crypto_key=None):
         if isinstance(blacklist, dict):
