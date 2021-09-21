@@ -19,10 +19,10 @@ def main():
                 args.name, args.access_key, crypto_key=args.crypto_key)
     if args.action == 'list':
         with ClientDatabase() as db:
-            print ("{:<8} {:<15} {:<16}".format('id:','name:','api key:'))
+            print("{:<8} {:<15} {:<16}".format('id:','name:','api key:'))
             for x in db.get_clients():
                 if x["client_id"] > 0:
-                    print ("{:<8} {:<15} {:<16}".format(x["client_id"], str(x["name"]), str(x["api_key"])))
+                    print("{:<8} {:<15} {:<16}".format(x["client_id"], str(x["name"]), str(x["api_key"])))
     if args.action == 'delete':
         with ClientDatabase() as db:
             client_valid = False
