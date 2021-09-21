@@ -105,7 +105,7 @@ class JsonClientDatabase(JsonDatabase):
     def get_clients(self):
         clients = []
         for user in self.search_by_key("client_id"):
-            clients.append(user["name"])
+            clients.append(user)
         return clients
 
     def add_client(self, name=None, key="",

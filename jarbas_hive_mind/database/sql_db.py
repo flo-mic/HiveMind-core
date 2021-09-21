@@ -107,7 +107,7 @@ class SQLClientDatabase:
     def get_clients(self):
         clients = []
         for user in self.session.query(Client).all():
-            clients.append(user.name)
+            clients.append(user)
         return clients
 
     def add_client(self, name=None, key="", admin=False,
